@@ -1,0 +1,14 @@
+{
+  "name": "el-craso-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "check": "node scripts/check.mjs",
+    "serve": "node scripts/serve.mjs",
+    "deploy": "npm run build && npm run check && cd dist && touch .nojekyll && rm -rf .git && git init -q -b gh-pages && git add -A && git commit -qm deploy && git push -qf https://github.com/Vladnes7/elcraso-site.git gh-pages && rm -rf .git && echo 'Опубликовано: https://vladnes7.github.io/elcraso-site/'"
+  },
+  "dependencies": {
+    "sharp": "0.35.4"
+  }
+}
