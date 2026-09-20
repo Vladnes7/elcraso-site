@@ -190,7 +190,7 @@ h1, h2, h3, p, figure, blockquote { margin: 0; }
 .rcard blockquote p { font-size: .9375rem; line-height: 1.6; }
 .rcard__date { margin-top: auto; }
 .marquee__toggle { display: grid; flex: none; place-items: center; width: 44px; height: 44px; border: 1px solid rgba(43, 34, 28, .3); border-radius: 50%; background: transparent; }
-.marquee__toggle .ic { width: 16px; height: 16px; fill: currentColor; stroke: none; }
+.marquee__toggle .ic { width: 16px; height: 16px; fill: currentColor; stroke: none; pointer-events: none; }
 .marquee__toggle .ic--play, .marquee__toggle[aria-pressed="true"] .ic--pause { display: none; }
 .marquee__toggle[aria-pressed="true"] .ic--play { display: block; }
 .reviews-band__foot { display: flex; gap: 24px; margin-top: 12px; min-height: 48px; align-items: center; }

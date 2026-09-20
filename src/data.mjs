@@ -180,7 +180,7 @@ export const works = [
   ['barberWork', 'barber'], ['hairStraight', 'hair'], ['nailsRedLong', 'nails'], ['makeupProcess', 'makeup'], ['mirrorHair', 'hair'], ['nailsMilkShort', 'nails'],
   ['menClipper', 'barber'], ['hairStyling', 'hair'], ['nailsStiletto', 'nails'], ['hero', 'makeup'], ['curls', 'hair'], ['nailsNudeSoft', 'nails'],
   ['menBeard', 'barber'], ['menManicure', 'nails'], ['pedicureNude', 'nails'], ['nailsWhite', 'nails'], ['nailsSpeckle', 'nails'], ['nailsMilk', 'nails'],
-  ['nailsPeach', 'nails'], ['pedicure', 'nails'], ['champion', 'barber'], ['nailsNude2', 'nails'], ['pedicureForest', 'nails'], ['nailsRing', 'nails'],
+  ['nailsPeach', 'nails'], ['pedicure', 'nails'], ['nailsNude2', 'nails'], ['pedicureForest', 'nails'], ['nailsRing', 'nails'],
   ['menHand', 'nails'], ['pedicureFeet', 'nails'],
 ];
 // 12 работ на главной: волосы, ногти, барбер и макияж вперемешку.
