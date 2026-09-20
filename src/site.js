@@ -22,6 +22,14 @@ const onScroll = () => header.classList.toggle('is-stuck', scrollY > 40);
 addEventListener('scroll', onScroll, { passive: true });
 onScroll();
 
+// ——— Кнопка записи появляется после первого экрана ———
+const floatBook = $('.float-book');
+if (floatBook) {
+  const toggleFloat = () => floatBook.classList.toggle('is-visible', scrollY > innerHeight * 0.7);
+  addEventListener('scroll', toggleFloat, { passive: true });
+  toggleFloat();
+}
+
 // ——— Появление блоков ———
 if (!reduced && 'IntersectionObserver' in window) {
   document.documentElement.classList.add('reveal-ready');

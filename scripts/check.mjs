@@ -19,6 +19,11 @@ for (const page of pages) {
   if (!html.includes('main id="main"')) errors.push(`${page}: main landmark missing`);
   if (/<img(?![^>]*\balt=)[^>]*>/.test(html)) errors.push(`${page}: img without alt`);
   for (const src of html.matchAll(/(?:src|href)="(assets\/[^"]+)"/g)) if (!fs.existsSync(path.join(out, src[1]))) errors.push(`${page}: missing ${src[1]}`);
+  for (const match of html.matchAll(/href="([a-z-]+\.html)(#[^"]+)?"/g)) {
+    const target = path.join(out, match[1]);
+    if (!fs.existsSync(target)) errors.push(`${page}: broken link ${match[1]}`);
+    else if (match[2] && !fs.readFileSync(target,'utf8').includes(`id="${match[2].slice(1)}"`)) errors.push(`${page}: broken anchor ${match[0]}`);
+  }
 }
 
 for (const required of ['assets/site.css', 'assets/site.js', 'robots.txt']) {

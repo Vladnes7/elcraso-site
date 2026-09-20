@@ -18,6 +18,7 @@ await fs.mkdir(cache, { recursive: true });
 
 for (const f of ['oranienbaum.woff2', 'onest.woff2', 'cormorant-italic.woff2']) await fs.copyFile(`public/fonts/${f}`, path.join(assets, 'fonts', f));
 for (const f of ['site.css', 'site.js']) await fs.copyFile(`src/${f}`, path.join(assets, f));
+await fs.copyFile('public/fonts/cormorant-regular.ttf',path.join(assets,'fonts/cormorant-regular.ttf'));
 
 // Фото: находим файл по префиксу имени, режем по ширинам, кэшируем (avif кодируется долго).
 const images = {};

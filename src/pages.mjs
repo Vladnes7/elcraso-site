@@ -51,11 +51,11 @@ export function createRenderer(images, site) {
       openingHours: 'Mo-Su 10:00-22:00', aggregateRating: { '@type': 'AggregateRating', ratingValue: '4.9', ratingCount: '61' },
       ...(site ? { url: site + '/', image: `${site}/assets/og.jpg` } : {}), sameAs: biz.socials.map(s => s[1]),
     })}</script>` : '';
-    return `<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+    return `<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>${esc(title)}</title><meta name="description" content="${esc(description)}">
 ${site ? `<link rel="canonical" href="${url}">` : '<meta name="robots" content="noindex">'}
 <meta property="og:type" content="website"><meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(description)}"><meta property="og:locale" content="ru_RU">${site ? `<meta property="og:url" content="${url}"><meta property="og:image" content="${site}/assets/og.jpg">` : ''}
-<meta name="theme-color" content="#A48D78"><link rel="icon" href="assets/favicon.png" type="image/png"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<meta name="theme-color" content="#A48D78"><meta name="color-scheme" content="light"><link rel="icon" href="assets/favicon.png" type="image/png"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="preload" href="assets/fonts/oranienbaum.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="assets/fonts/onest.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/site.css">${schema}</head>`;
   }
@@ -104,7 +104,7 @@ ${book('Записаться', 'btn btn--small header__book')}
 </div><div class="wrap footer__base"><span>© 2026 El’Craso</span>${book('Записаться онлайн', 'link')}</div></footer>`;
   }
 
-  const page = (id, title, description, body) => `${head(id, title, description)}<body class="page-${id}">${header(id)}<main id="main">${body}</main>${footer()}<script src="assets/site.js" defer></script></body></html>`;
+  const page = (id, title, description, body) => `${head(id, title, description)}<body class="page-${id}">${header(id)}<main id="main">${body}</main>${footer()}<a class="float-book" href="${biz.booking}" target="_blank" rel="noopener">${icon('calendar')}<span>Записаться</span></a><script src="assets/site.js" defer></script></body></html>`;
 
   // Шапка внутренней страницы: текст слева, справа фото целиком (без обрезки) — основное и маленькое поверх.
   const pageHead = (eyebrow, title, lead, [main, small] = [], extra = '') => `<section class="phead band band--oat"><div class="wrap phead__grid">
@@ -135,6 +135,7 @@ ${main ? `<div class="phead__media" data-intro><div class="phead__main">${pictur
 <h1 class="h1 split" id="hero-title">${split('Доверь нам себя и свою <em>красоту</em>')}</h1>
 <p class="lead" data-intro>Волосы, ногти, брови и ресницы, барбер, косметология и лазерная эпиляция — в Троицке, на Городской улице, 12.</p>
 <div class="actions" data-intro>${book()}<a class="btn btn--ghost" href="services.html">Услуги и цены</a></div>
+<p class="hero__rating" data-intro>${stars}<span><strong>${biz.rating}</strong> на Яндекс Картах · ${biz.ratingCount}</span></p>
 </div></div></section>`;
 
     const trust = `<section class="trust band band--porcelain" aria-label="Коротко о салоне"><div class="wrap"><ul class="trust__list">
@@ -146,10 +147,8 @@ ${main ? `<div class="phead__media" data-intro><div class="phead__main">${pictur
 
     const servicesBlock = `<section class="band band--feather" aria-labelledby="svc-title"><div class="wrap">
 ${secHead('Услуги', 'Всё для вашего <em>образа</em>', 'svc-title', '<a class="link" href="services.html">Полный прайс' + icon('arrow') + '</a>')}
-<ul class="scards">${services.map(serviceCard).join('')}
-<li class="scard scard--cta" data-reveal><div><h3>Не знаете, что выбрать?</h3><p>Позвоните — администратор подскажет услугу и мастера.</p></div><a class="btn" href="${biz.phoneHref}">${biz.phone}</a>${book('Записаться онлайн', 'link')}</li>
-</ul>
-<div class="all-prices" data-reveal><a class="btn btn--wide" href="services.html">Весь прайс: ${services.length} разделов, ${services.reduce((n, s) => n + s.items.length, 0)} услуг${icon('arrow')}</a></div>
+<ul class="scards">${services.map(serviceCard).join('')}</ul>
+<div class="all-prices" data-reveal><a class="btn btn--wide" href="services.html">Весь прайс: ${services.length} разделов, ${services.reduce((n, s) => n + s.items.length, 0)} услуг${icon('arrow')}</a><a class="btn btn--ghost btn--wide" href="${biz.phoneHref}">${icon('phone')}${biz.phone}</a></div>
 </div></section>`;
 
     const atmo = ['reception', 'hall', 'lounge', 'wash', 'cosmetology', 'pedicureRoom'];
@@ -198,8 +197,8 @@ ${secHead('Отзывы', 'Что говорят <em>гости</em>', 'rev-titl
       const plain = s.items.filter(it => !it[2]);
       return `<section class="pcat band ${i % 2 ? 'band--porcelain' : 'band--feather'}" id="${s.id}" aria-labelledby="${s.id}-t"><div class="wrap">
 <div class="pcat__head"><div><h2 class="h2" id="${s.id}-t">${s.title}</h2><p class="lead">${s.text}</p>${s.note ? `<p class="pcat__note">${s.note}</p>` : ''}</div>${book('Записаться', 'btn btn--small')}</div>
-${withPhoto.length ? `<ul class="icards">${withPhoto.map(([n, p, ph]) => `<li class="icard">${picture(ph, '(max-width: 760px) 50vw, 20vw', { alt: n })}<div class="icard__body"><h3>${n}</h3><p class="icard__price">${p}</p></div></li>`).join('')}</ul>` : ''}
-${plain.length ? `<div class="plist-wrap${withPhoto.length ? '' : ' plist-wrap--solo'}">${withPhoto.length ? '' : `<div class="plist__photo">${picture(s.cover, '(max-width: 760px) 100vw, 30vw', { alt: s.title })}</div>`}<ul class="plist">${plain.map(([n, p]) => `<li><span>${n}</span><span class="plist__price">${p}</span></li>`).join('')}</ul></div>` : ''}
+${withPhoto.length ? `<ul class="icards">${withPhoto.map(([n, p, ph, d]) => `<li class="icard">${picture(ph, '(max-width: 760px) 50vw, 20vw', { alt: n })}<div class="icard__body"><h3>${n}</h3><p class="icard__price">${p}</p>${d ? `<p class="icard__desc">${d}</p>` : ''}</div></li>`).join('')}</ul>` : ''}
+${plain.length ? `<div class="plist-wrap${withPhoto.length ? '' : ' plist-wrap--solo'}">${withPhoto.length ? '' : `<div class="plist__photo">${picture(s.cover, '(max-width: 760px) 100vw, 30vw', { alt: s.title })}</div>`}<ul class="plist">${plain.map(([n, p, , d]) => `<li><span class="plist__name">${n}${d ? `<span class="plist__desc">${d}</span>` : ''}</span><span class="plist__price">${p}</span></li>`).join('')}</ul></div>` : ''}
 </div></section>`;
     }).join('');
     return page('services', 'Услуги и цены — El’Craso, Троицк',
