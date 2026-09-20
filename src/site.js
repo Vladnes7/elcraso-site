@@ -18,17 +18,21 @@ matchMedia('(min-width: 1101px)').addEventListener('change', e => { if (e.matche
 
 // ——— Тень у шапки после начала прокрутки ———
 const header = $('.header');
-const onScroll = () => header.classList.toggle('is-stuck', scrollY > 40);
-addEventListener('scroll', onScroll, { passive: true });
-onScroll();
-
-// ——— Кнопка записи появляется после первого экрана ———
-const floatBook = $('.float-book');
-if (floatBook) {
-  const toggleFloat = () => floatBook.classList.toggle('is-visible', scrollY > innerHeight * 0.7);
-  addEventListener('scroll', toggleFloat, { passive: true });
-  toggleFloat();
+let stuck = false;
+function onScroll() {
+  // Разные пороги на вход и выход: у края прокрутки класс иначе мигает туда-сюда
+  if (!stuck && scrollY > 64) { stuck = true; header.classList.add('is-stuck'); }
+  else if (stuck && scrollY < 24) { stuck = false; header.classList.remove('is-stuck'); }
+  if (floatBook) floatBook.classList.toggle('is-visible', scrollY > innerHeight * 0.75);
 }
+const floatBook = $('.float-book');
+let ticking = false;
+addEventListener('scroll', () => {
+  if (ticking) return;
+  ticking = true;
+  requestAnimationFrame(() => { onScroll(); ticking = false; }); // один пересчёт на кадр
+}, { passive: true });
+onScroll();
 
 // ——— Появление блоков ———
 if (!reduced && 'IntersectionObserver' in window) {
@@ -59,7 +63,10 @@ if (tocLinks.length && 'IntersectionObserver' in window) {
     tocLinks.forEach(a => a.classList.remove('is-active'));
     const link = byId.get(e.target.id);
     link.classList.add('is-active');
-    link.parentElement.parentElement.scrollTo({ left: link.offsetLeft - 16, behavior: reduced ? 'auto' : 'smooth' });
+    const strip = link.parentElement.parentElement;
+    const left = link.offsetLeft - 16;
+    const visible = left >= strip.scrollLeft - 8 && link.offsetLeft + link.offsetWidth <= strip.scrollLeft + strip.clientWidth;
+    if (!visible) strip.scrollLeft = left;
   }), { rootMargin: '-35% 0px -60% 0px' });
   $$('.pcat').forEach(s => spy.observe(s));
 }

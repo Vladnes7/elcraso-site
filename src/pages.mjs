@@ -51,7 +51,7 @@ export function createRenderer(images, site) {
       openingHours: 'Mo-Su 10:00-22:00', aggregateRating: { '@type': 'AggregateRating', ratingValue: '4.9', ratingCount: '61' },
       ...(site ? { url: site + '/', image: `${site}/assets/og.jpg` } : {}), sameAs: biz.socials.map(s => s[1]),
     })}</script>` : '';
-    return `<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    return `<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(title)}</title><meta name="description" content="${esc(description)}">
 ${site ? `<link rel="canonical" href="${url}">` : '<meta name="robots" content="noindex">'}
 <meta property="og:type" content="website"><meta property="og:title" content="${esc(title)}"><meta property="og:description" content="${esc(description)}"><meta property="og:locale" content="ru_RU">${site ? `<meta property="og:url" content="${url}"><meta property="og:image" content="${site}/assets/og.jpg">` : ''}
