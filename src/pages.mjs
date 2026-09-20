@@ -88,7 +88,7 @@ ${book('Записаться', 'btn btn--small header__book')}
 <li>${icon('clock')}<div><strong>${biz.hours}</strong><span>Без выходных</span></div></li>
 <li>${icon('phone')}<div><a href="${biz.phoneHref}"><strong>${biz.phone}</strong></a><span>Звонки и запись</span></div></li>
 </ul>
-<div class="socials">${biz.socials.map(([n, u, k]) => `<a class="chip" href="${u}" target="_blank" rel="noopener">${social(k)}${n}</a>`).join('')}</div>
+<div class="socials">${biz.socials.map(([n, u, k]) => `<a class="chip" href="${u}" target="_blank" rel="noopener">${icons[k] ? icon(k) : ''}${n}</a>`).join('')}</div>
 <div class="actions">${book()}${outLink(biz.maps, 'Маршрут', 'btn btn--ghost')}</div>
 </div>
 <div class="map" data-reveal><iframe title="El’Craso на Яндекс Картах" src="https://yandex.ru/map-widget/v1/org/el_craso/59447166729/?ll=${biz.lon}%2C${biz.lat}&amp;z=17" loading="lazy"></iframe></div>
